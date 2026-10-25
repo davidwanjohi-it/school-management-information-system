@@ -122,61 +122,30 @@ These topics form part of the broader database design and SQL work. The current 
 
 
 
-\## Architecture
-
-
 
 The application follows a straightforward structure:
 
 
 
+## Architecture
+
 ```text
-
-Web Browser
-
-&#x20;   |
-
-&#x20;   v
-
-Django Web Application
-
-&#x20;   |
-
-&#x20;   v
-
-Django ORM
-
-&#x20;   |
-
-&#x20;   v
-
-MySQL Database
-
-
-
-
-
-Postman / API Client
-
-&#x20;   |
-
-&#x20;   v
-
-Django REST Framework
-
-&#x20;   |
-
-&#x20;   v
-
-Django ORM
-
-&#x20;   |
-
-&#x20;   v
-
-MySQL Database
-
+                 Users
+                   |
+          +--------+--------+
+          |                 |
+     Web Dashboard        REST API
+          |                 |
+          +--------+--------+
+                   |
+                 Django
+          (Views, Models, Logic)
+                   |
+                MySQL
+             (Database)
 ```
+
+Postman can be used to test the REST API. Git and GitHub manage source control and project publication.
 
 
 
@@ -324,9 +293,9 @@ After the project has been published to GitHub, clone it using the repository's 
 
 ```bash
 
-git clone YOUR\_GITHUB\_REPOSITORY\_URL
+git clone https://github.com/davidwanjohi-it/school-management-information-system.git
 
-cd YOUR\_PROJECT\_DIRECTORY
+cd school-management-information-system
 
 ```
 
