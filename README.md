@@ -1,476 +1,204 @@
-\# School Management Information System (SMIS)
+# School Management Information System (SMIS)
 
+A portfolio project built with Python, Django, Django REST Framework and MySQL. It combines relational database work with a web dashboard and REST API for managing core academic records.
 
+I developed the database components first, then built the Django application around providers, courses, intakes, students and enrollments. The project has also given me practical experience troubleshooting database connections, configuring authentication and testing API endpoints.
 
-A hands-on portfolio project combining MySQL database development, Python, Django and Django REST Framework to explore how a school management system can be built.
+## What it does
 
+**Web dashboard**
+- Displays counts for students, courses, intakes and enrollments.
+- Requires users to log in.
+- Uses Django's authentication system and MySQL database.
 
+**REST API**
 
-I started with the database design and SQL work, then developed a Django web application and REST API around the core academic records. Through this project, I have been practising relational database design, backend development, authentication, API endpoints, database connectivity and troubleshooting.
+The Django REST Framework API provides authenticated endpoints for:
 
+- Course providers
+- Courses
+- Intakes
+- Students
+- Enrollments
 
+The viewsets support standard create, read, update and delete operations. Related database records are retrieved using `select_related()` where appropriate.
 
-\## Project Overview
+Local API address: `http://127.0.0.1:8000/api/`
 
+**Database and SQL**
 
+The wider database work also covers student and guardian records, fee components, partial payments, outstanding balances, examinations, results, attendance, graduation records and SQL reporting.
 
-The system is designed around common academic administration tasks, including maintaining course information, managing student records and tracking enrollments.
+These are part of the broader database work; they are not all implemented as features in the current Django application.
 
+## Technology
 
-
-The project combines database development with a working web application and REST API. I use it to practise backend development, test endpoints, troubleshoot database issues and understand how the different components of a web application work together.
-
-
-
-\## Features
-
-
-
-\### Django Web Application
-
-
-
-\- Dashboard displaying summary counts for students, courses, intakes and enrollments.
-
-\- Login-protected dashboard.
-
-\- Django authentication and session handling.
-
-\- MySQL integration through Django's database configuration and ORM.
-
-
-
-\### REST API
-
-
-
-The API is built with Django REST Framework and exposes endpoints for these resources:
-
-
-
-\- Course providers
-
-\- Courses
-
-\- Intakes
-
-\- Students
-
-\- Enrollments
-
-
-
-The implemented API viewsets support standard CRUD operations and require authentication. Related database records are retrieved using `select\_related()` where appropriate.
-
-
-
-\*\*Local API base URL:\*\* `http://127.0.0.1:8000/api/`
-
-
-
-\### Database and SQL Development
-
-
-
-The wider database work covers:
-
-
-
-\- Course providers, courses and intakes.
-
-\- Students, guardians and enrollments.
-
-\- Component-based fees and partial payments.
-
-\- Outstanding balance calculations.
-
-\- Exams, results and attendance.
-
-\- Graduation and certificate records.
-
-\- Advanced SQL reporting.
-
-
-
-These topics form part of the broader database design and SQL work. The current Django application and API focus on the core provider, course, intake, student and enrollment resources.
-
-
-
-\## Technology Stack
-
-
-
-| Technology | Purpose |
-
+| Technology | Use |
 |---|---|
-
+| Python 3.12 | Application logic |
+| Django 5.2 | Web application |
+| Django REST Framework | REST API |
 | MySQL 8.4 | Relational database |
-
-| MySQL Workbench | Database access, inspection and administration |
-
-| Python 3.12 | Backend programming |
-
-| Django 5.2 | Web application framework |
-
-| Django REST Framework | REST API development |
-
-| Django ORM | Database access and model relationships |
-
-| Postman | API exploration and testing |
-
-| Git and GitHub | Version control and project sharing |
-
-
-
-
-The application follows a straightforward structure:
-
-
+| Django ORM | Models and database queries |
+| MySQL Workbench | Database administration and inspection |
+| Postman | API testing |
+| Git and GitHub | Version control |
 
 ## Architecture
 
 ```text
-                 Users
-                   |
-          +--------+--------+
-          |                 |
-     Web Dashboard        REST API
-          |                 |
-          +--------+--------+
-                   |
-                 Django
-          (Views, Models, Logic)
-                   |
-                MySQL
-             (Database)
+             Users
+               |
+       +-------+-------+
+       |               |
+   Dashboard         REST API
+       |               |
+       +-------+-------+
+               |
+             Django
+       (Views and Models)
+               |
+             MySQL
 ```
 
-Postman can be used to test the REST API. Git and GitHub manage source control and project publication.
+Both the dashboard and API use Django and share the same MySQL database.
 
+## Screenshots
 
+### Dashboard
 
-Django handles the web application and authentication, while Django REST Framework exposes the implemented resources through API endpoints. Both use MySQL as the persistent data store.
+![SMIS Dashboard](docs/screenshots/Dashboard.png)
 
+### API
 
+**API root**
 
-\## Project Structure
+![API Root](docs/screenshots/Api%20Root%20Dashboard.png)
 
+**Students**
 
+![Students API](docs/screenshots/Api%20Students%20list.png)
+
+**Courses**
+
+![Courses API](docs/screenshots/Api%20Course%20list.png)
+
+**Intakes**
+
+![Intakes API](docs/screenshots/Api%20Intakes%20List.png)
+
+**Enrollments**
+
+![Enrollments API](docs/screenshots/Api%20Enrollments%20List.png)
+
+## Run locally
+
+### Requirements
+
+- Python 3.12
+- MySQL 8.4
+- Git
+
+### 1. Clone the repository
+
+```powershell
+git clone https://github.com/davidwanjohi-it/school-management-information-system.git
+cd school-management-information-system
+```
+
+### 2. Create a virtual environment
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+### 4. Configure the environment
+
+Create a `.env` file in the project root using `.env.example` as a guide. Set your own Django secret key and MySQL connection details.
+
+Do not commit `.env` or publish real credentials.
+
+### 5. Prepare the database
+
+Create the MySQL database and configure an account with the necessary permissions. Then run:
+
+```powershell
+cd smis_web
+python manage.py migrate
+```
+
+### 6. Start the application
+
+```powershell
+python manage.py runserver
+```
+
+Open `http://127.0.0.1:8000/` for the dashboard or `http://127.0.0.1:8000/api/` for the API.
+
+The API resources require authentication.
+
+## Testing
+
+The project includes basic Django tests. During development, I have also checked Django's configuration, verified migration status and tested the application's MySQL connection.
+
+API endpoints can be explored using Postman or Django REST Framework's browsable API.
+
+## Project structure
 
 ```text
-
-SMIS\_Full\_Portfolio\_Project/
-
+school-management-information-system/
 ├── docs/
-
 │   ├── screenshots/
-
 │   ├── ARCHITECTURE.md
-
-│   └── ROADMAP\_COMPLETION.md
-
-├── mysql\_admin/
-
-│   ├── 01\_create\_app\_user.sql
-
-│   └── 02\_backup\_restore.md
-
+│   └── ROADMAP_COMPLETION.md
+├── mysql_admin/
+│   ├── 01_create_app_user.sql
+│   └── 02_backup_restore.md
 ├── portfolio/
-
-│   ├── ANDELA\_PROJECT\_ENTRY.md
-
-│   └── WHISTIC\_PROJECT\_STORY.md
-
+│   └── PROJECT_STORY.md
 ├── postman/
-
-│   └── API\_GUIDE.md
-
-├── smis\_web/
-
+│   └── API_GUIDE.md
+├── smis_web/
 │   ├── config/
-
 │   ├── core/
-
+│   ├── templates/
 │   └── manage.py
-
 ├── sql/
-
-│   └── advanced\_reports\_42\_50.sql
-
+│   └── advanced_reports_42_50.sql
 ├── .env.example
-
 ├── .gitignore
-
 ├── README.md
-
 └── requirements.txt
-
 ```
 
+## What I'm working on next
 
+I want to expand the automated tests, strengthen API validation and permissions, and continue developing the database reporting work.
 
-\## Screenshots
+A longer-term idea is to build a separate public-facing school website for school information, programmes, admissions and enquiries. That website could eventually communicate with the management system through authenticated APIs. It has not been implemented yet.
 
+## Other work
 
+I'm also building a network security auditing lab, where I practise log analysis and security monitoring using Splunk, including an alert workflow that creates Jira tickets.
 
-\### Application Dashboard
+- GitHub profile: https://github.com/davidwanjohi-it
+- Network Security Auditing Lab: https://github.com/davidwanjohi-it/network-security-auditing
 
-
-
-!\[SMIS Dashboard](docs/screenshots/Dashboard.png)
-
-
-
-\### REST API
-
-
-
-\*\*API root\*\*
-
-
-
-!\[API Root](docs/screenshots/Api%20Root%20Dashboard.png)
-
-
-
-\*\*Students\*\*
-
-
-
-!\[Students API](docs/screenshots/Api%20Students%20list.png)
-
-
-
-\*\*Courses\*\*
-
-
-
-!\[Courses API](docs/screenshots/Api%20Course%20list.png)
-
-
-
-\*\*Intakes\*\*
-
-
-
-!\[Intakes API](docs/screenshots/Api%20Intakes%20List.png)
-
-
-
-\*\*Enrollments\*\*
-
-
-
-!\[Enrollments API](docs/screenshots/Api%20Enrollments%20List.png)
-
-
-
-\## Running the Project Locally
-
-
-
-\### Prerequisites
-
-
-
-\- Python 3.12
-
-\- MySQL 8.4
-
-\- Git
-
-\- A MySQL database and account configured for the application
-
-
-
-\### 1. Clone the repository
-
-
-
-After the project has been published to GitHub, clone it using the repository's actual URL:
-
-
-
-```bash
-
-git clone https://github.com/davidwanjohi-it/school-management-information-system.git
-
-cd school-management-information-system
-
-```
-
-
-
-\### 2. Create and activate a virtual environment
-
-
-
-From the project root, run:
-
-
-
-```powershell
-
-python -m venv smis\_web\\.venv
-
-.\\smis\_web\\.venv\\Scripts\\Activate.ps1
-
-```
-
-
-
-\### 3. Install dependencies
-
-
-
-```powershell
-
-python -m pip install -r requirements.txt
-
-```
-
-
-
-\### 4. Configure environment variables
-
-
-
-Create a `.env` file in the project root using `.env.example` as a template.
-
-
-
-Configure the Django secret key, debug setting and MySQL connection details for your local environment. Do not commit `.env` or publish real database passwords or secret keys.
-
-
-
-\### 5. Prepare the database
-
-
-
-Create or configure the MySQL database and ensure the configured account has the required permissions. Apply Django migrations as appropriate for the database and migration state:
-
-
-
-```powershell
-
-cd smis\_web
-
-python manage.py migrate
-
-```
-
-
-
-\### 6. Start the development server
-
-
-
-```powershell
-
-python manage.py runserver
-
-```
-
-
-
-Open `http://127.0.0.1:8000/` in your browser.
-
-
-
-The API root is available at `http://127.0.0.1:8000/api/`. API resources require authentication.
-
-
-
-\## Testing and Verification
-
-
-
-The project includes basic Django model tests. During development, I have also checked Django's system configuration, verified migration status and tested the application's connection to MySQL.
-
-
-
-The API can be explored using Postman or Django REST Framework's browsable API.
-
-
-
-\## Skills I Am Developing
-
-
-
-Through this project, I am building practical experience in:
-
-
-
-\- Relational database design and SQL queries.
-
-\- MySQL database access and administration using MySQL Workbench.
-
-\- Django models and database relationships.
-
-\- Connecting a Python application to MySQL.
-
-\- Developing REST API endpoints.
-
-\- Authentication and session handling.
-
-\- Troubleshooting configuration and database connectivity.
-
-\- Organizing code, dependencies and documentation for version control.
-
-
-
-\## Future Plans
-
-
-
-One of my longer-term goals is to develop a school-focused commercial website that can work alongside this SMIS project.
-
-
-
-The public-facing website could provide school information, programmes, admissions details and enquiry functionality, while the management system would focus on internal academic records and administration.
-
-
-
-I plan to explore how the two systems could communicate securely through APIs, with appropriate authentication and access controls. This would be a separate stage of development; the commercial website and its integration are not yet implemented.
-
-
-
-\## Other Projects
-
-
-
-SMIS is part of my ongoing hands-on learning in backend development, databases, systems administration and security.
-
-
-
-I also work on other technical projects and practical labs, exploring different tools and documenting what I learn.
-
-
-
-\- \*\*GitHub profile:\*\* \[github.com/davidwanjohi-it](https://github.com/davidwanjohi-it)
-
-\- \*\*Network Security Auditing Lab:\*\* \[github.com/davidwanjohi-it/network-security-auditing](https://github.com/davidwanjohi-it/network-security-auditing)
-
-
-
-The security lab explores security monitoring and log analysis, including Splunk and an alert workflow integrating Splunk with Jira. Together, these projects reflect my interest in both application development and practical IT systems.
-
-## Copyright and Usage
+## Copyright
 
 Copyright © 2026 David Wanjohi Rubucwa. All rights reserved.
 
-This repository is published for portfolio review and demonstration of my software development work. Unless I grant explicit written permission or applicable law provides otherwise, no permission is granted to reproduce, redistribute, modify, or commercially exploit my original source code or documentation.
+This repository is published for portfolio review and demonstration of my software development work. No permission is granted to reproduce, redistribute, modify or commercially exploit my original source code or documentation, except where permitted by applicable law or with explicit written permission.
 
-Third-party libraries and components remain subject to their respective licenses.
+Third-party libraries and components remain subject to their respective licenses. Viewing this repository does not transfer ownership of the original work.
 
-Viewing this repository does not transfer ownership of the original work.
+## Project status
 
-\## Project Status
-
-
-
-This is an ongoing hands-on learning and portfolio project. It includes an implemented Django application and REST API for core academic records, alongside broader MySQL database design and SQL development work.
-
-
-
-It is not presented as a fully deployed production school management system. My next steps include expanding the test coverage, strengthening the API, continuing the database work and exploring the planned public-facing school website.
+This is an ongoing portfolio project. The Django dashboard and REST API cover core academic records, supported by broader MySQL database design and SQL work. It is not presented as a fully deployed production school management system.
